@@ -3,6 +3,7 @@ import axios from "axios";
 
 const App = () => {
   const [clientData, setClientData] = useState([]);
+
   useEffect(() => {
     async function getData() {
       try {
@@ -12,9 +13,9 @@ const App = () => {
         console.error(err);
       }
     }
-
     getData();
   }, []);
+
 
 
   return (
@@ -22,6 +23,7 @@ const App = () => {
       <table>
         <tbody>
           <tr>
+            <th></th>
             <th>Creditor</th>
             <th>First Name</th>
             <th>Last Name</th>
@@ -31,6 +33,7 @@ const App = () => {
           {
             clientData.map(client => (
               <tr key={client.id}>
+                <td><input type="checkbox" /></td>
                 <td>{client.creditorName}</td>
                 <td>{client.firstName}</td>
                 <td>{client.lastName}</td>
