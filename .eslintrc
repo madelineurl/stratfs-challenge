@@ -1,0 +1,22 @@
+{
+  "plugins": ["testing-library", "jest-dom"],
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": [
+    "plugin:testing-library/recommended",
+    "plugin:testing-library/react",
+    "plugin:jest-dom/recommended",
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  "rules": {
+    "react/prop-types": 0,
+    "semi": [1, "always"],
+    "dot-notation": 1,
+    "valid-typeof": 2
+  }
+}

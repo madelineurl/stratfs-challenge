@@ -1,18 +1,18 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { TableHeader } from "./table-header";
 import { DataList } from "./data-list";
 import { NewRow } from "./new-row";
 import { TableButtons } from "./table-buttons";
 import { Totals } from "./totals";
-import { checkIfSelected, getTotalBalance } from "../utils/helpers";
+import { checkIfSelected, getTotalBalance } from "./utils/helpers";
+import { fetchData } from "./utils/fetch-data";
 
 const App = () => {
   const [clientData, setClientData] = useState([]);
   const [selected, setSelected] = useState([]);
-  const [error, setError] = useState([]);
+  const [error, setError] = useState(false);
   let nextId = 0;
   const [newRow, setNewRow] = useState({
     id: nextId,
@@ -25,9 +25,9 @@ const App = () => {
 
   // load the data when the component mounts
   useEffect(() => {
-    async function getData() {
+    async function setData() {
       try {
-        const { data } = await axios.get('https://raw.githubusercontent.com/StrategicFS/Recruitment/master/data.json');
+        const { data } = await fetchData();
         setClientData(data);
       } catch (err) {
         setError(true);
@@ -35,7 +35,7 @@ const App = () => {
       }
     }
 
-    getData();
+    setData();
     nextId = clientData.length + 1;
   }, []);
 
@@ -94,11 +94,10 @@ const App = () => {
     });
   };
 
+  if (error) return <h3>There was a problem loading the data.</h3>;
+
   return (
     <>
-      {
-        error && <h3>There was a problem loading the data.</h3>
-      }
       <table>
         <tbody>
           <TableHeader selectAllRows={selectAllRows} />
