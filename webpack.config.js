@@ -3,7 +3,8 @@ const path = require('path');
 
 module.exports = {
   mode: 'development',
-  entry:  ['./client/index.js'],
+  devtool: 'source-map',
+  entry:  './client/index.js',
   output: {
     path: __dirname,
     filename: './public/bundle.js'
@@ -11,7 +12,6 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx']
   },
-  devtool: 'source-map',
   watchOptions: {
     ignored: /node_modules/
   },
