@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { TableHeader } from "./table-header";
+import { DataList } from "./data-list";
+import { NewRow } from "./new-row";
+import { TableButtons } from "./table-buttons";
+import { Totals } from "./totals";
 import { checkIfSelected, getTotalBalance } from "../utils/helpers";
 
 const App = () => {
@@ -25,6 +30,7 @@ const App = () => {
         console.error(err);
       }
     }
+
     getData();
     nextId = clientData.length + 1;
   }, []);
@@ -33,6 +39,7 @@ const App = () => {
   // otherwise, add it to selected values
   const selectRow = (rowData) => {
     const exists = checkIfSelected(rowData, selected);
+
     if (exists) {
       setSelected(selected.filter(row => row.id !== rowData.id));
     } else {
@@ -46,16 +53,19 @@ const App = () => {
     else setSelected([...clientData]);
   };
 
-  // ensure the user has selected rows to remove, then remove all rows with matching ids from selected state
+  // ensure the user has selected some rows to remove
+  // then remove all rows with matching ids from selected state
   const removeRows = () => {
     if (!selected.length) alert('Please select one or more rows to remove');
     const allIds = clientData.map(row => row.id);
     const selectedIds = selected.map(row => row.id);
     const remainingIds = allIds.filter(id => !selectedIds.includes(id));
     const remainingRows = [];
+
     clientData.forEach(row => {
       if (remainingIds.includes(row.id)) remainingRows.push(row);
     });
+
     setClientData(remainingRows);
     setSelected([]);
   };
@@ -84,58 +94,20 @@ const App = () => {
     <>
       <table>
         <tbody>
-          <tr>
-            <th>
-              <input type="checkbox" onClick={selectAllRows}/>
-            </th>
-            <th>Creditor</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Min Pay %</th>
-            <th>Balance</th>
-          </tr>
-          {
-            clientData.map(client => (
-              <tr key={client.id}>
-                <td>
-                  <input
-                    type="checkbox"
-                    onChange={() => selectRow(client)}
-                    checked={checkIfSelected(client, selected)}
-                  />
-                </td>
-                <td>{client.creditorName}</td>
-                <td>{client.firstName}</td>
-                <td>{client.lastName}</td>
-                <td>{client.minPaymentPercentage}%</td>
-                <td>{client.balance}.00</td>
-              </tr>
-            ))
-          }
-          <tr>
-            <td></td>
-            <td><input name="creditorName" onChange={handleChange}/></td>
-            <td><input name="firstName" onChange={handleChange}/></td>
-            <td><input name="lastName" onChange={handleChange}/></td>
-            <td><input name="minPaymentPercentage" onChange={handleChange}/></td>
-            <td><input name="balance" onChange={handleChange}/></td>
-          </tr>
-          <tr>
-            <td>
-              <button onClick={addRow}>Add Debt</button>
-            </td>
-            <td>
-              <button onClick={removeRows}>Remove Debt</button>
-            </td>
-          </tr>
-          <tr>
-            <td>Total Balance</td>
-            <td>{getTotalBalance(selected)}</td>
-          </tr>
-          <tr>
-            <td>Total Row Count: {clientData.length}</td>
-            <td>Check Row Count: {selected.length}</td>
-          </tr>
+          <TableHeader selectAllRows={selectAllRows} />
+          <DataList
+            clientData={clientData}
+            selected={selected}
+            selectRow={selectRow}
+            checkIfSelected={checkIfSelected}
+          />
+         <NewRow handleChange={handleChange} />
+         <TableButtons addRow={addRow} removeRows={removeRows} />
+         <Totals
+            getTotalBalance={getTotalBalance}
+            clientData={clientData}
+            selected={selected}
+          />
         </tbody>
       </table>
     </>
