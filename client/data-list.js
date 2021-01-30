@@ -12,6 +12,7 @@ export const DataList = ({ clientData, selectRow, checkIfSelected, selected }) =
                 type="checkbox"
                 onChange={() => selectRow(client)}
                 checked={checkIfSelected(client, selected)}
+                className="checkbox"
               />
             </td>
             <td>{client.creditorName}</td>

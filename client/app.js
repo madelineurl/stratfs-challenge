@@ -1,3 +1,5 @@
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { TableHeader } from "./table-header";

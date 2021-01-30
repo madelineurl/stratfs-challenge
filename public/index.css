@@ -6,3 +6,26 @@ body {
 body * {
   box-sizing: border-box;
 }
+
+table {
+  width: 100%;
+  border: 1px solid black;
+}
+
+td {
+  width: 20%;
+  border: 1px solid black;
+}
+
+.checkbox {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
+
+@media screen and (min-width: 500px) {
+  table {
+    width: 500px;
+    margin: 0 auto;
+  }
+}
