@@ -5,10 +5,15 @@ export const Totals = ({ getTotalBalance, selected, clientData }) => {
   return (
     <>
       <tr>
-        <td>Total Balance</td>
+        <td></td>
+        <td className="totals-left">Total Balance</td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td>{getTotalBalance(selected)}</td>
       </tr>
       <tr>
+        <td></td>
         <td>Total Row Count: {clientData.length}</td>
         <td>Check Row Count: {selected.length}</td>
       </tr>

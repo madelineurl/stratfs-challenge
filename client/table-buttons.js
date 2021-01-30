@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 export const TableButtons = ({ addRow, removeRows }) => {
   return (
     <tr>
+      <td></td>
       <td>
         <button onClick={addRow}>Add Debt</button>
       </td>

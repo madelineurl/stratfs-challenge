@@ -102,6 +102,7 @@ const App = () => {
         <tbody>
           <TableHeader selectAllRows={selectAllRows} />
           <DataList
+            role="listitems"
             clientData={clientData}
             selected={selected}
             selectRow={selectRow}

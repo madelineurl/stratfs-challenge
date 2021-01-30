@@ -6,7 +6,7 @@ export const DataList = ({ clientData, selectRow, checkIfSelected, selected }) =
     <>
       {
         clientData.map(client => (
-          <tr key={client.id}>
+          <tr key={client.id} role="rowgroup">
             <td>
               <input
                 type="checkbox"
