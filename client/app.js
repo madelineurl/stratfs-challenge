@@ -23,7 +23,7 @@ const App = () => {
       <table>
         <tbody>
           <tr>
-            <th></th>
+            <th><input type="checkbox" /></th>
             <th>Creditor</th>
             <th>First Name</th>
             <th>Last Name</th>
@@ -42,6 +42,18 @@ const App = () => {
               </tr>
             ))
           }
+          <tr>
+            <td><button>Add Debt</button></td>
+            <td><button>Remove Debt</button></td>
+          </tr>
+          <tr>
+            <td>Total</td>
+            <td>-Total Amount Here-</td>
+          </tr>
+          <tr>
+            <td>Total Row Count: ___</td>
+            <td>Check Row count: ___</td>
+          </tr>
         </tbody>
       </table>
     </>
