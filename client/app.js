@@ -3,6 +3,7 @@ import axios from "axios";
 
 const App = () => {
   const [clientData, setClientData] = useState([]);
+  const [selected, setSelected] = useState([]);
 
   useEffect(() => {
     async function getData() {
@@ -16,8 +17,18 @@ const App = () => {
     getData();
   }, []);
 
-
-
+  const selectRow = (rowData) => {
+    // check if the row has already been selected by filtering for a matching ID
+    const exists = selected.filter(row => row.id === rowData.id);
+    // if the resulting array isn't empty, filter it out of the selected values
+    // otherwise, add it to selected values
+    if (exists.length) {
+      setSelected(selected.filter(row => row.id !== rowData.id));
+    } else {
+      setSelected([...selected, rowData]);
+    }
+  };
+  console.log(selected)
   return (
     <>
       <table>
@@ -33,7 +44,9 @@ const App = () => {
           {
             clientData.map(client => (
               <tr key={client.id}>
-                <td><input type="checkbox" /></td>
+                <td>
+                  <input type="checkbox" onClick={() => selectRow(client)} />
+                </td>
                 <td>{client.creditorName}</td>
                 <td>{client.firstName}</td>
                 <td>{client.lastName}</td>
@@ -43,8 +56,12 @@ const App = () => {
             ))
           }
           <tr>
-            <td><button>Add Debt</button></td>
-            <td><button>Remove Debt</button></td>
+            <td>
+              <button>Add Debt</button>
+            </td>
+            <td>
+              <button>Remove Debt</button>
+            </td>
           </tr>
           <tr>
             <td>Total</td>
