@@ -43,12 +43,22 @@ const App = () => {
     return exists.length > 0;
   }
 
+  function getTotalBalance() {
+    let total = 0;
+    selected.forEach(rowData => {
+      total += rowData.balance;
+    });
+    return total;
+  }
+
   return (
     <>
       <table>
         <tbody>
           <tr>
-            <th><input type="checkbox" onClick={selectAllRows}/></th>
+            <th>
+              <input type="checkbox" onClick={selectAllRows}/>
+            </th>
             <th>Creditor</th>
             <th>First Name</th>
             <th>Last Name</th>
@@ -82,8 +92,8 @@ const App = () => {
             </td>
           </tr>
           <tr>
-            <td>Total</td>
-            <td>-Total Amount Here-</td>
+            <td>Total Balance</td>
+            <td>{getTotalBalance()}</td>
           </tr>
           <tr>
             <td>Total Row Count: {clientData.length}</td>
