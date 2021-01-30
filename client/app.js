@@ -18,23 +18,37 @@ const App = () => {
   }, []);
 
   const selectRow = (rowData) => {
-    // check if the row has already been selected by filtering for a matching ID
-    const exists = selected.filter(row => row.id === rowData.id);
-    // if the resulting array isn't empty, filter it out of the selected values
+    // check if the row has already been selected
+    // if so, filter it out of the selected values
     // otherwise, add it to selected values
-    if (exists.length) {
+    const exists = checkIfSelected(rowData);
+    if (exists) {
       setSelected(selected.filter(row => row.id !== rowData.id));
     } else {
       setSelected([...selected, rowData]);
     }
   };
-  console.log(selected)
+
+  const selectAllRows = () => {
+    // if all of the rows are selected, uncheck them all
+    // otherwise, select all of the rows
+    if (selected.length === clientData.length) setSelected([]);
+    else setSelected([...clientData]);
+  };
+
+  // utility function to check if a row is selected
+  // the return value will help keep the checkbox in sync with selected state
+  function checkIfSelected(rowData) {
+    const exists = selected.filter(row => row.id === rowData.id);
+    return exists.length > 0;
+  }
+
   return (
     <>
       <table>
         <tbody>
           <tr>
-            <th><input type="checkbox" /></th>
+            <th><input type="checkbox" onClick={selectAllRows}/></th>
             <th>Creditor</th>
             <th>First Name</th>
             <th>Last Name</th>
@@ -45,7 +59,11 @@ const App = () => {
             clientData.map(client => (
               <tr key={client.id}>
                 <td>
-                  <input type="checkbox" onClick={() => selectRow(client)} />
+                  <input
+                    type="checkbox"
+                    onChange={() => selectRow(client)}
+                    checked={checkIfSelected(client)}
+                  />
                 </td>
                 <td>{client.creditorName}</td>
                 <td>{client.firstName}</td>
