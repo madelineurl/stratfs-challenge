@@ -68,8 +68,8 @@ const App = () => {
             <td>-Total Amount Here-</td>
           </tr>
           <tr>
-            <td>Total Row Count: ___</td>
-            <td>Check Row count: ___</td>
+            <td>Total Row Count: {clientData.length}</td>
+            <td>Check Row Count: {selected.length}</td>
           </tr>
         </tbody>
       </table>
