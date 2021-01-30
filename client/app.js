@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { checkIfSelected, getTotalBalance } from "../utils/helpers";
 
 const App = () => {
   const [clientData, setClientData] = useState([]);
@@ -21,7 +22,7 @@ const App = () => {
     // check if the row has already been selected
     // if so, filter it out of the selected values
     // otherwise, add it to selected values
-    const exists = checkIfSelected(rowData);
+    const exists = checkIfSelected(rowData, selected);
     if (exists) {
       setSelected(selected.filter(row => row.id !== rowData.id));
     } else {
@@ -36,20 +37,17 @@ const App = () => {
     else setSelected([...clientData]);
   };
 
-  // utility function to check if a row is selected
-  // the return value will help keep the checkbox in sync with selected state
-  function checkIfSelected(rowData) {
-    const exists = selected.filter(row => row.id === rowData.id);
-    return exists.length > 0;
-  }
-
-  function getTotalBalance() {
-    let total = 0;
-    selected.forEach(rowData => {
-      total += rowData.balance;
+  const removeRows = () => {
+    const allIds = clientData.map(row => row.id);
+    const selectedIds = selected.map(row => row.id);
+    const remainingIds = allIds.filter(id => !selectedIds.includes(id));
+    const remainingRows = [];
+    clientData.forEach(row => {
+      if (remainingIds.includes(row.id)) remainingRows.push(row);
     });
-    return total;
-  }
+    setClientData(remainingRows);
+    setSelected([]);
+  };
 
   return (
     <>
@@ -72,7 +70,7 @@ const App = () => {
                   <input
                     type="checkbox"
                     onChange={() => selectRow(client)}
-                    checked={checkIfSelected(client)}
+                    checked={checkIfSelected(client, selected)}
                   />
                 </td>
                 <td>{client.creditorName}</td>
@@ -88,12 +86,12 @@ const App = () => {
               <button>Add Debt</button>
             </td>
             <td>
-              <button>Remove Debt</button>
+              <button onClick={removeRows}>Remove Debt</button>
             </td>
           </tr>
           <tr>
             <td>Total Balance</td>
-            <td>{getTotalBalance()}</td>
+            <td>{getTotalBalance(selected)}</td>
           </tr>
           <tr>
             <td>Total Row Count: {clientData.length}</td>
