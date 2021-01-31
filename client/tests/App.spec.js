@@ -8,7 +8,7 @@ import App from "../app";
 import axios from "axios";
 import { fetchData } from "../utils/fetch-data";
 
-// jest.mock('axios');
+jest.mock('../utils/fetch-data');
 
 const sampleData = [
   {
@@ -56,13 +56,13 @@ describe('App', () => {
   // });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    jest.resetAllMocks();
   });
 
   it('fetches data from the provided api on initial mount', async () => {
-    // axios.get.mockResolvedValue({
-    //   data: sampleData
-    // });
+    fetchData.mockResolvedValue({
+      data: sampleData
+    });
     render(<App />);
 
 
