@@ -62,21 +62,22 @@ export const DataTable = ({ data, setState }) => {
   };
 
   const addRow = () => {
-    if (!newRow.creditor) alert('Please enter a creditor name');
+    if (!newRow.creditorName) alert('Please enter a creditor name');
+    else {
+      setState({ clientData: [...clientData, newRow] });
 
-    setState({ clientData: [...clientData, newRow] });
+      let nextId = clientData.length + 1;
 
-    let nextId = clientData.length + 1;
-
-    setNewRow({
-      id: nextId,
-      creditorName: '',
-      firstName: '',
-      lastName: '',
-      minPaymentPercentage: 0,
-      balance: 0
-    });
-    nextId++;
+      setNewRow({
+        id: nextId,
+        creditorName: '',
+        firstName: '',
+        lastName: '',
+        minPaymentPercentage: 0,
+        balance: 0
+      });
+      nextId++;
+    }
   };
 
   if (!clientData.length) return null;

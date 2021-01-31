@@ -2,7 +2,7 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import React, { useState, useEffect } from "react";
 import { DataTable } from "./data-table";
-import { fetchData } from "./utils/fetch-data";
+import { fetchData } from "./utils/helpers";
 
 const App = () => {
   const [state, setState] = useState({
@@ -20,7 +20,6 @@ const App = () => {
         setState({ loading: false, clientData: data, error: null });
       } catch (err) {
         setState({ loading: false, clientData: [], error: err });
-        console.error(err);
       }
     }
 
