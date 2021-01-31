@@ -8,7 +8,7 @@ import App from "../app";
 import axios from "axios";
 import { fetchData } from "../utils/fetch-data";
 
-jest.mock('axios');
+// jest.mock('axios');
 
 const sampleData = [
   {
@@ -37,35 +37,38 @@ const sampleData = [
   },
 ];
 
-describe('fetchData function', () => {
-  it('returns an array of client data', async () => {
-    axios.get.mockResolvedValue({
-      data: sampleData
-    });
+// describe('fetchData function', () => {
+//   it('returns an array of client data', async () => {
+//     axios.get.mockResolvedValue({
+//       data: sampleData
+//     });
 
-    const { data } = await fetchData();
+//     const { data } = await fetchData();
 
-    expect(data).toHaveLength(3);
-    expect(data[0].firstName).toEqual('Suman');
-  });
-});
+//     expect(data).toHaveLength(3);
+//     expect(data[0].firstName).toEqual('Suman');
+//   });
+// });
 
 describe('App', () => {
-  beforeEach(() => {
-    render(<App />);
-  });
+  // beforeEach(() => {
+  //   render(<App />);
+  // });
 
   afterEach(() => {
     jest.clearAllMocks();
   });
 
   it('fetches data from the provided api on initial mount', async () => {
-    axios.get.mockResolvedValue({
-      data: sampleData
-    });
+    // axios.get.mockResolvedValue({
+    //   data: sampleData
+    // });
+    render(<App />);
+
 
     expect(await screen.findAllByRole('rowgroup')).toHaveLength(4);
 
-    await act(() => fetchData());
+    // await waitForElementToBeRemoved(() => screen.getByText(/saving/i))
+    // await act(() => fetchData());
   });
 });

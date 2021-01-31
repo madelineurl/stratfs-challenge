@@ -10,9 +10,14 @@ import { checkIfSelected, getTotalBalance } from "./utils/helpers";
 import { fetchData } from "./utils/fetch-data";
 
 const App = () => {
-  const [clientData, setClientData] = useState([]);
+  const [state, setState] = useState({
+    loading: false,
+    error: null,
+    clientData: []
+  });
+
   const [selected, setSelected] = useState([]);
-  const [error, setError] = useState(false);
+
   let nextId = 0;
   const [newRow, setNewRow] = useState({
     id: nextId,
@@ -27,10 +32,11 @@ const App = () => {
   useEffect(() => {
     async function setData() {
       try {
+        setState({ loading: true, clientData: [], error: null });
         const { data } = await fetchData();
-        setClientData(data);
+        setState({ loading: false, clientData: data, error: null });
       } catch (err) {
-        setError(true);
+        setState({ loading: false, clientData: [], error: err });
         console.error(err);
       }
     }
@@ -70,7 +76,7 @@ const App = () => {
       if (remainingIds.includes(row.id)) remainingRows.push(row);
     });
 
-    setClientData(remainingRows);
+    setState({clientData: remainingRows});
     setSelected([]);
   };
 
@@ -82,7 +88,8 @@ const App = () => {
   };
 
   const addRow = () => {
-    setClientData([...clientData, newRow]);
+    if (!newRow.creditor) alert('Please enter a creditor name');
+    setState({ clientData: [...clientData, newRow] });
     nextId++;
     setNewRow({
       id: nextId,
@@ -94,10 +101,14 @@ const App = () => {
     });
   };
 
-  if (error) return <h3>There was a problem loading the data.</h3>;
-
+  const { loading, error, clientData } = state;
   return (
     <>
+       <div role="alert" aria-live="polite">
+        {
+         loading ? 'Loading...' : error ? error.message : null
+        }
+      </div>
       <table>
         <tbody>
           <TableHeader selectAllRows={selectAllRows} />
