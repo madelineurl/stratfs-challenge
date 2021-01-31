@@ -4,19 +4,14 @@ import PropTypes from "prop-types";
 export const Totals = ({ getTotalBalance, selected, clientData }) => {
   return (
     <>
-      <tr>
-        <td></td>
-        <td className="totals-left">Total Balance</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{getTotalBalance(selected)}</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>Total Row Count: {clientData.length}</td>
-        <td>Check Row Count: {selected.length}</td>
-      </tr>
+      <div>
+        <div className="totals-left">Total Balance</div>
+        <div>{getTotalBalance(selected)}</div>
+      </div>
+      <div>
+        <div>Total Row Count: {clientData.length}</div>
+        <div>Check Row Count: {selected.length}</div>
+      </div>
     </>
   );
 };

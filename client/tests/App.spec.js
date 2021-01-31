@@ -43,17 +43,14 @@ const sampleData = [
 
 describe('App', () => {
   it('fetches and renders client data from the provided api on initial mount', async () => {
-    expect(utils.fetchData).toHaveBeenCalledTimes(0);
-
     utils.fetchData.mockResolvedValue({
       data: sampleData
     });
 
     const {container} = render(<App />);
 
-    expect(utils.fetchData).toHaveBeenCalledTimes(1);
-
     expect(container).toBeDefined();
+    expect(utils.fetchData).toHaveBeenCalledTimes(1);
 
     const alert = screen.getByRole('alert');
     expect(alert).toHaveTextContent(/Loading/i);
@@ -61,8 +58,8 @@ describe('App', () => {
     await waitForElementToBeRemoved(() => screen.getByText(/Loading/i));
 
     expect(await screen.findAllByRole('row')).toHaveLength(5);
-
     expect(await screen.findByText('Jane')).toBeInTheDocument();
+    expect(await screen.findByText('Total Row Count: 3')).toBeInTheDocument();
   });
 
   it('renders an error if there is a problem loading data', async () => {
@@ -77,4 +74,8 @@ describe('App', () => {
 
     await waitFor(() => expect(alert).toHaveTextContent(message));
   });
+});
+
+describe('', () => {
+
 });

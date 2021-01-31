@@ -82,24 +82,25 @@ export const DataTable = ({ data, setState }) => {
 
   if (!clientData.length) return null;
   return (
-    <table>
+    <div className="container">
+      <table>
         <tbody>
           <TableHeader selectAllRows={selectAllRows} />
           <DataList
-            role="listitems"
             clientData={clientData}
             selected={selected}
             selectRow={selectRow}
             checkIfSelected={checkIfSelected}
           />
-         <NewRow handleChange={handleChange} />
-         <TableButtons addRow={addRow} removeRows={removeRows} />
-         <Totals
-            getTotalBalance={getTotalBalance}
-            clientData={clientData}
-            selected={selected}
-          />
+        <NewRow handleChange={handleChange} />
         </tbody>
       </table>
+      <TableButtons addRow={addRow} removeRows={removeRows} />
+      <Totals
+        getTotalBalance={getTotalBalance}
+        clientData={clientData}
+        selected={selected}
+      />
+    </div>
   );
 };
