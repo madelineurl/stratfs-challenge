@@ -1,7 +1,5 @@
- import axios from "axios";
-
- // utility function to check if a row is selected
-  // the return value will help keep the checkbox in sync with selected state
+// utility function to check if a row is selected
+// the return value will help keep the checkbox in sync with selected state
 export function checkIfSelected(rowData, selected) {
   const exists = selected.filter(row => row.id === rowData.id);
   return exists.length > 0;
@@ -15,6 +13,6 @@ export function getTotalBalance(selected) {
   return total;
 }
 
-export const fetchData = () => {
-  return axios.get('https://raw.githubusercontent.com/StrategicFS/Recruitment/master/data.json');
-};
+export function roundTwoDecimals(num) {
+  return (Math.round(num * 100) / 100).toFixed(2);
+}

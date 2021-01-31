@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 export const NewRow = ({ handleChange }) => {
   return (
     <tr>
-      <td></td>
+      <th></th>
       <td><input name="creditorName" onChange={handleChange}/></td>
       <td><input name="firstName" onChange={handleChange}/></td>
       <td><input name="lastName" onChange={handleChange}/></td>

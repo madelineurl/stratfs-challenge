@@ -80,10 +80,9 @@ export const DataTable = ({ data, setState }) => {
     }
   };
 
-  if (!clientData.length) return null;
   return (
-    <div className="container">
-      <table>
+    <div className="main container">
+      <table className="table">
         <tbody>
           <TableHeader selectAllRows={selectAllRows} />
           <DataList

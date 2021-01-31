@@ -7,25 +7,70 @@ body * {
   box-sizing: border-box;
 }
 
-table {
+.table {
+  table-layout: fixed;
   width: 100%;
-  border: 1px solid black;
 }
 
 td {
   width: 20%;
   border: 1px solid black;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.checkbox {
+input {
+  position: relative;
+  width: 100%;
+}
+
+input.checkbox {
+  width: 20px;
+}
+
+.buttons {
   display: flex;
-  justify-content: center;
-  margin: 0;
+  justify-content: space-between;
+  margin: .25rem;
 }
 
-@media screen and (min-width: 500px) {
-  table {
-    width: 500px;
+.buttons button {
+  padding: .25rem .5rem;
+}
+
+.totals, .buttons {
+  width: 85%;
+  margin-left: auto;
+}
+
+.totals {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  border-radius: 5px;
+}
+
+.totals > div {
+  margin: 0 20px;
+}
+
+.balance.totals {
+  justify-content: space-between;
+  background-color: rgb(172, 172, 172);
+}
+
+.row.totals {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.row.totals > div {
+  margin-right: 50px;
+}
+
+@media screen and (min-width: 800px) {
+  .main.container {
+    width: 800px;
     margin: 0 auto;
   }
 }

@@ -3,13 +3,9 @@ import PropTypes from "prop-types";
 
 export const TableButtons = ({ addRow, removeRows }) => {
   return (
-    <div>
-      <div>
-        <button onClick={addRow}>Add Debt</button>
-      </div>
-      <div>
-        <button onClick={removeRows}>Remove Debt</button>
-      </div>
+    <div className="buttons">
+      <button onClick={removeRows}>Remove Debt</button>
+      <button onClick={addRow}>Add Debt</button>
     </div>
   );
 };
