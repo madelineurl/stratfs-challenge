@@ -1,25 +1,27 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { roundTwoDecimals } from "./utils/helpers";
 
 export const DataList = ({ clientData, selectRow, checkIfSelected, selected }) => {
   return (
     <>
       {
         clientData.map(client => (
-          <tr key={client.id} role="rowgroup">
-            <td>
+          <tr key={client.id} role="listitem">
+            <th>
               <input
                 type="checkbox"
+                className="checkbox"
+                role="option"
                 onChange={() => selectRow(client)}
                 checked={checkIfSelected(client, selected)}
-                className="checkbox"
               />
-            </td>
+            </th>
             <td>{client.creditorName}</td>
             <td>{client.firstName}</td>
             <td>{client.lastName}</td>
-            <td>{client.minPaymentPercentage}%</td>
-            <td>{client.balance}.00</td>
+            <td>{roundTwoDecimals(client.minPaymentPercentage)}%</td>
+            <td>{roundTwoDecimals(client.balance)}</td>
           </tr>
         ))
       }

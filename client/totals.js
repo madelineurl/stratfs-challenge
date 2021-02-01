@@ -1,22 +1,34 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { roundTwoDecimals } from "./utils/helpers";
 
 export const Totals = ({ getTotalBalance, selected, clientData }) => {
   return (
     <>
-      <tr>
-        <td></td>
-        <td className="totals-left">Total Balance</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{getTotalBalance(selected)}</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>Total Row Count: {clientData.length}</td>
-        <td>Check Row Count: {selected.length}</td>
-      </tr>
+      <div className="balance totals">
+        <div>
+          <strong>
+           <label>
+                Total Balance
+            </label>
+          </strong>
+        </div>
+        <div className="total-balance" data-testid="total-balance">
+          {roundTwoDecimals(getTotalBalance(selected))}
+        </div>
+      </div>
+      <div className="row totals">
+        <div>
+          <strong>
+            Total Row Count: {clientData.length}
+          </strong>
+        </div>
+        <div>
+          <strong>
+            Check Row Count: {selected.length}
+          </strong>
+        </div>
+      </div>
     </>
   );
 };

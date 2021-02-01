@@ -5,7 +5,7 @@ export const TableHeader = ({ selectAllRows }) => {
   return (
     <tr>
       <th>
-        <input type="checkbox" onClick={selectAllRows}/>
+        <input type="checkbox" data-testid="select-all" onClick={selectAllRows}/>
       </th>
       <th>Creditor</th>
       <th>First Name</th>
