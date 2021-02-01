@@ -7,7 +7,10 @@ export const DataList = ({ clientData, selectRow, checkIfSelected, selected }) =
     <>
       {
         clientData.map(client => (
-          <tr key={client.id} role="listitem">
+          <tr
+            key={client.id}
+            role="listitem" className="data-row"
+          >
             <th>
               <input
                 type="checkbox"
