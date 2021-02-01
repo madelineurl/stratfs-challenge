@@ -11,7 +11,7 @@ export const DataTable = ({ data, setState }) => {
   const [selected, setSelected] = useState([]);
 
   const [newRow, setNewRow] = useState({
-    id: 0,
+    id: data.length + 1,
     creditorName: '',
     firstName: '',
     lastName: '',
@@ -66,19 +66,19 @@ export const DataTable = ({ data, setState }) => {
     else {
       setState({ clientData: [...clientData, newRow] });
 
-      let nextId = clientData.length + 1;
-
       setNewRow({
-        id: nextId,
+        id: newRow.id + 1,
         creditorName: '',
         firstName: '',
         lastName: '',
         minPaymentPercentage: 0,
         balance: 0
       });
-      nextId++;
+
     }
   };
+
+  console.log(newRow)
 
   return (
     <div className="main container">
@@ -91,7 +91,7 @@ export const DataTable = ({ data, setState }) => {
             selectRow={selectRow}
             checkIfSelected={checkIfSelected}
           />
-          <NewRow handleChange={handleChange} />
+          <NewRow handleChange={handleChange} newRow={newRow} />
         </tbody>
       </table>
       <TableButtons
