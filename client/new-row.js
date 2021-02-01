@@ -33,7 +33,7 @@ export const NewRow = ({ handleChange }) => {
         <input
           type="text"
           name="minPaymentPercentage"
-          placeholder="Min payment percentage"
+          placeholder="Min payment %"
           onChange={handleChange}
         />
         </td>

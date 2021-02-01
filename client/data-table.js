@@ -91,10 +91,13 @@ export const DataTable = ({ data, setState }) => {
             selectRow={selectRow}
             checkIfSelected={checkIfSelected}
           />
-        <NewRow handleChange={handleChange} />
+          <NewRow handleChange={handleChange} />
         </tbody>
       </table>
-      <TableButtons addRow={addRow} removeRows={removeRows} />
+      <TableButtons
+        addRow={addRow}
+        removeRows={removeRows}
+      />
       <Totals
         getTotalBalance={getTotalBalance}
         clientData={clientData}

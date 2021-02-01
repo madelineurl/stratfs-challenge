@@ -13,8 +13,14 @@ export const Totals = ({ getTotalBalance, selected, clientData }) => {
             </label>
           </strong>
         </div>
-        <div className="total-balance" data-testid="total-balance">
-          {roundTwoDecimals(getTotalBalance(selected))}
+        <div
+          className="total-balance" data-testid="total-balance"
+        >
+          <strong>
+            {
+              roundTwoDecimals(getTotalBalance(selected))
+            }
+          </strong>
         </div>
       </div>
       <div className="row totals">
