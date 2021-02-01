@@ -29,7 +29,7 @@ const App = () => {
   const { loading, error, clientData } = state;
   return (
     <>
-       <div role="alert" aria-live="polite">
+       <div role="alert" aria-live="polite" className="center">
         {
          loading ?
           'Loading...' : error ?

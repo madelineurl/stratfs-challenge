@@ -15,6 +15,13 @@ body * {
   box-sizing: border-box;
 }
 
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5rem;
+}
+
 .table {
   table-layout: fixed;
   width: 100%;
