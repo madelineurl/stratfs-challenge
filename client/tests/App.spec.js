@@ -9,8 +9,6 @@ import { fetchData } from "../utils/fetch-data";
 
 /*
 
-the tests below use React Testing Library and Jest to assure the app's functionality from as close to the user's perspective as possible.
-
 i tried to follow best practices for isolating tests and emphasizing more thorough, if fewer, tests rather than 'one assertion per test' (per RTL creator Kent Dodd's advice --> https://kentcdodds.com/blog/write-fewer-longer-tests/)
 
 in the future, i'd like to move away from mocking the client API (perhaps using jest.spyOn and fetch instead) so these tests truly hold up after any type of implementation refactor.
@@ -143,23 +141,6 @@ describe('App', () => {
     });
 
     render(<App />);
-<<<<<<< HEAD
-
-    expect(await screen.findAllByRole('option')).toHaveLength(3);
-
-    const creditorNameInput = await screen.findByPlaceholderText(/Creditor name/i);
-
-    userEvent.type(creditorNameInput, 'AMEX');
-
-    userEvent.click(await screen.findByRole('button', {name: /Add debt/i }));
-
-    expect(await screen.findAllByRole('option')).toHaveLength(4);
-
-    expect(await screen.findByText(/Total Row Count: 4/i)).toBeInTheDocument();
-  });
-
-  it('a user can remove rows from the table', async () => {
-=======
 
     expect(await screen.findAllByRole('option')).toHaveLength(3);
 
@@ -195,28 +176,6 @@ describe('App', () => {
   });
 
   it('a user cannot add an empty row', async () => {
->>>>>>> 2c0bbf115f9accadad57d8eed1e9c00d8b0cadd1
-    fetchData.mockResolvedValue({
-      data: sampleData
-    });
-
-    render(<App />);
-
-<<<<<<< HEAD
-    const options = await screen.findAllByRole('option');
-
-    expect(await screen.findByText(/Total Row Count: 3/i)).toBeInTheDocument();
-
-    userEvent.click(options[1]);
-
-    userEvent.click(await screen.findByRole('button', {name: /Remove debt/i }));
-
-    expect(await screen.findAllByRole('option')).toHaveLength(2);
-
-    expect(await screen.findByText(/Total Row Count: 2/i)).toBeInTheDocument();
-  });
-
-  it('a user cannot add an empty row', async () => {
     fetchData.mockResolvedValue({
       data: sampleData
     });
@@ -225,10 +184,6 @@ describe('App', () => {
 
     global.alert = jest.fn();
 
-=======
-    global.alert = jest.fn();
-
->>>>>>> 2c0bbf115f9accadad57d8eed1e9c00d8b0cadd1
     userEvent.click(await screen.findByRole('button', {name: /Add debt/i }));
 
     expect(global.alert).toHaveBeenCalledTimes(1);
