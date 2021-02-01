@@ -7,6 +7,14 @@ import React from "react";
 import App from "../app";
 import { fetchData } from "../utils/fetch-data";
 
+/*
+
+the tests below use React Testing Library and Jest to assure the app's functionality from as close to the user's perspective as possible.
+
+i tried to follow best practices for isolating tests and emphasizing more thorough, if fewer, tests rather than 'one assertion per test' (per RTL creator Kent Dodd's advice --> https://kentcdodds.com/blog/write-fewer-longer-tests/)
+
+*/
+
 jest.mock('../utils/fetch-data');
 
 afterEach(() => {
@@ -57,11 +65,11 @@ describe('App', () => {
     await waitForElementToBeRemoved(() => screen.getByText(/Loading/i));
 
     expect(await screen.findAllByRole('listitem')).toHaveLength(3);
-    expect(await screen.findByText('Jane')).toBeInTheDocument();
+
     expect(await screen.findByText(/Total Row Count: 3/i)).toBeInTheDocument();
   });
 
-  it('renders an error if data cannot be loaded', async () => {
+  it('renders an error if the data cannot be loaded', async () => {
     const message = "TEST_ERROR_MESSAGE";
 
     fetchData.mockRejectedValueOnce({message});
@@ -74,34 +82,37 @@ describe('App', () => {
     await waitFor(() => expect(alert).toHaveTextContent(message));
   });
 
-  it('a user can check/uncheck a single row', async () => {
+  it('a user can check/uncheck a single row, and the total balance updates accordingly', async () => {
     fetchData.mockResolvedValue({
       data: sampleData
     });
+
     render(<App />);
 
     const options = await screen.findAllByRole('option');
 
     userEvent.click(options[0]);
 
-
     expect(options[0]).toBeChecked();
 
     expect(await screen.findByText('Check Row Count: 1')).toBeInTheDocument();
+
     expect(await screen.findByTestId('total-balance')).toHaveTextContent('1363.00');
 
     userEvent.click(options[0]);
-    await waitFor(() => {
-      expect(options[0]).not.toBeChecked();
-    });
+
+    expect(options[0]).not.toBeChecked();
+
     expect(await screen.findByText('Check Row Count: 0')).toBeInTheDocument();
+
     expect(await screen.findByTestId('total-balance')).toHaveTextContent('0.00');
   });
 
-  it('a user can check/uncheck all rows', async () => {
+  it('a user can check/uncheck all rows, and the total balance updates accordingly', async () => {
     fetchData.mockResolvedValue({
       data: sampleData
     });
+
     render(<App />);
 
     const selectAll = await screen.findByTestId('select-all');
@@ -113,44 +124,82 @@ describe('App', () => {
       expect(option).toBeChecked();
     });
 
+    expect(await screen.findByTestId('total-balance')).toHaveTextContent('4555.00');
+
     userEvent.click(selectAll);
 
     options.forEach(option => {
       expect(option).not.toBeChecked();
     });
+
+    expect(await screen.findByTestId('total-balance')).toHaveTextContent('0.00');
   });
 
+  it('a user can enter values and add a row to the table', async () => {
+    fetchData.mockResolvedValue({
+      data: sampleData
+    });
 
+    render(<App />);
+
+    expect(await screen.findAllByRole('option')).toHaveLength(3);
+
+    const creditorNameInput = await screen.findByPlaceholderText(/Creditor name/i);
+
+    userEvent.type(creditorNameInput, 'AMEX');
+
+    userEvent.click(await screen.findByRole('button', {name: /Add debt/i }));
+
+    expect(await screen.findAllByRole('option')).toHaveLength(4);
+
+    expect(await screen.findByText(/Total Row Count: 4/i)).toBeInTheDocument();
+  });
+
+  it('a user can remove rows from the table', async () => {
+    fetchData.mockResolvedValue({
+      data: sampleData
+    });
+
+    render(<App />);
+
+    const options = await screen.findAllByRole('option');
+
+    expect(await screen.findByText(/Total Row Count: 3/i)).toBeInTheDocument();
+
+    userEvent.click(options[1]);
+
+    userEvent.click(await screen.findByRole('button', {name: /Remove debt/i }));
+
+    expect(await screen.findAllByRole('option')).toHaveLength(2);
+
+    expect(await screen.findByText(/Total Row Count: 2/i)).toBeInTheDocument();
+  });
+
+  it('a user cannot add an empty row', async () => {
+    fetchData.mockResolvedValue({
+      data: sampleData
+    });
+
+    render(<App />);
+
+    global.alert = jest.fn();
+
+    userEvent.click(await screen.findByRole('button', {name: /Add debt/i }));
+
+    expect(global.alert).toHaveBeenCalledTimes(1);
+  });
+
+  it('a user cannot remove rows without selecting any rows to remove', async () => {
+    fetchData.mockResolvedValue({
+      data: sampleData
+    });
+
+    render(<App />);
+
+    global.alert = jest.fn();
+
+    userEvent.click(await screen.findByRole('button', {name: /Remove debt/i }));
+
+    expect(global.alert).toHaveBeenCalledTimes(1);
+  });
 });
-
-
-// describe('Totals', () => {
-//   it('renders the total balance of selected rows', () => {
-//     const selected = [sampleData[0]];
-
-//     render(<Totals
-//       clientData={sampleData}
-//       selected={selected}
-//       getTotalBalance={getTotalBalance}
-//     />);
-
-//     expect(getTotalBalance).toHaveBeenCalledWith(selected);
-
-//     expect(screen.getByText('Total Balance: 1363')).toBeInTheDocument();
-//   });
-// });
-
-  // it('renders a message if there is no data to display', async () => {
-  //   fetchData.mockRejectedValueOnce({ data: [] });
-
-  //   render(<App />);
-
-  //   const alert = screen.getByRole('alert');
-  //   expect(alert).toHaveTextContent(/Loading/i);
-
-  //   await waitForElementToBeRemoved(() => screen.getByText(/Loading/i));
-
-  //   await waitFor(() => {
-  //     expect(alert).toHaveTextContent('No data to display');
-  //   });
-  //});

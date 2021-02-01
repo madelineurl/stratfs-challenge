@@ -33,9 +33,12 @@ const App = () => {
         {
          loading ?
           'Loading...' : error ?
-            error.message : <DataTable data={clientData} setState={setState} />
+            error.message : null
         }
       </div>
+      {
+        clientData.length && <DataTable data={clientData} setState={setState} />
+      }
     </>
   );
 };
